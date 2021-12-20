@@ -1,0 +1,139 @@
+{
+    "appid": "fe1edf94-6933-4314-8f4b-5334172e32c6",
+    "name": "chucknorris",
+    "description": "Sample APP using the Chuck Norris API for training and education purposes",
+    "type": "information",
+    "product_vendor": "ChuckFacts",
+    "logo": "chucknorris.png",
+    "logo_dark": "chucknorris_dark.png",
+    "product_name": "Jokes",
+    "python_version": "3",
+    "product_version_regex": ".*",
+    "publisher": "World Wide Technology",
+    "license": "Copyright (c) World Wide Technology, 2021",
+    "app_version": "1.0.0",
+    "utctime_updated": "2021-12-20T20:11:07.075859Z",
+    "package_name": "phantom_chucknorris",
+    "main_module": "chucknorris_connector.py",
+    "min_phantom_version": "5.1.0.70187",
+    "app_wizard_version": "1.0.0",
+    "configuration": {
+        "hostname": {
+            "description": "Hostname/IP address",
+            "data_type": "string",
+            "required": true,
+            "value_list": [],
+            "default": "",
+            "order": 0,
+            "name": "hostname",
+            "id": 0
+        },
+        "verify": {
+            "description": "Verify server certificate",
+            "data_type": "boolean",
+            "required": false,
+            "default": false,
+            "order": 1,
+            "name": "verify",
+            "id": 1
+        }
+    },
+    "actions": [
+        {
+            "action": "test connectivity",
+            "identifier": "test_connectivity",
+            "description": "Validate the asset configuration for connectivity using supplied configuration",
+            "verbose": "",
+            "type": "test",
+            "read_only": true,
+            "parameters": {},
+            "output": [],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get_random",
+            "identifier": "get_random",
+            "description": "Retrieve a random joke",
+            "verbose": "Retrieve a random chuck joke in JSON format.",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {},
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get_category",
+            "identifier": "get_category",
+            "description": "Get available categories",
+            "verbose": "Retrieve a list of available categories.",
+            "type": "investigate",
+            "read_only": false,
+            "parameters": {
+                "limit": {
+                    "description": "max limit to return",
+                    "data_type": "numeric",
+                    "required": false,
+                    "primary": false,
+                    "contains": [],
+                    "value_list": [],
+                    "default": "10",
+                    "order": 0,
+                    "name": "limit"
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.limit",
+                    "data_type": "numeric",
+                    "contains": [],
+                    "column_name": "limit",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        }
+    ]
+}

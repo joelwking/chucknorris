@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+    // Documentation @joelwking
+    // https://code.visualstudio.com/docs/python/debugging
+        {
+            "name": "Python: Current File IN APP directory",
+            "type": "python",
+            // This containter contains a virtual environment at /opt/prezo
+            "python": "/opt/phantom/usr/bin/python",
+            // "pythonPath": "/opt/phantom/www:/opt/phantom/lib3:/opt/phantom/pycommon3",
+            "stopOnEntry": true,
+            "request": "launch",
+            // "program": "${file}",
+            // use the following format of absolute path so the imports work properly
+            "program": "${file}",
+            // "envFile": "${workspaceFolder}/.env/debug.env",
+            "env": {"PYTHONPATH": "/opt/phantom/www:/opt/phantom/lib3:/opt/phantom/pycommon3"},
+            "args": ["-u admin", "-p password", "-d True", "/home/phantom/app/chucknorris/phchucknorris/test_jsons/test.json"],
+            "console": "integratedTerminal"
+        }
+    ]
+}

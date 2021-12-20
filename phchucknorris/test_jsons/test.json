@@ -1,0 +1,12 @@
+{
+    "app_config": null,
+    "asset_id": "22",
+    "config": {
+               "hostname": "api.chucknorris.io",
+               "verify": false 
+    },
+    "debug_level": 3,
+    "identifier": "test_connectivity",
+    "parameters": [
+    ]
+}

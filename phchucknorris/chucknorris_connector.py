@@ -13,7 +13,7 @@ from phantom.base_connector import BaseConnector
 from phantom.action_result import ActionResult
 
 # Usage of the consts file is recommended
-# from chucknorris_consts import *
+from chucknorris_consts import *
 import requests
 import json
 from bs4 import BeautifulSoup
@@ -168,21 +168,21 @@ class ChucknorrisConnector(BaseConnector):
         self.save_progress("Connecting to endpoint")
         # make rest call
         ret_val, response = self._make_rest_call(
-            '/endpoint', action_result, params=None, headers=None
+            TEST_CONNECTIVITY, action_result, params=None, headers=None
         )
 
         if phantom.is_fail(ret_val):
             # the call to the 3rd party device or service failed, action result should contain all the error details
             # for now the return is commented out, but after implementation, return from here
             self.save_progress("Test Connectivity Failed.")
-            # return action_result.get_status()
+            return action_result.get_status()
 
         # Return success
-        # self.save_progress("Test Connectivity Passed")
-        # return action_result.set_status(phantom.APP_SUCCESS)
+        self.save_progress("Test Connectivity Passed")
+        return action_result.set_status(phantom.APP_SUCCESS)
 
         # For now return Error with a message, in case of success we don't set the message, but use the summary
-        return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
 
     def _handle_get_random(self, param):
         # Implement the handler here
@@ -202,14 +202,14 @@ class ChucknorrisConnector(BaseConnector):
 
         # make rest call
         ret_val, response = self._make_rest_call(
-            '/endpoint', action_result, params=None, headers=None
+            '/jokes/random', action_result, params=None, headers=None
         )
 
         if phantom.is_fail(ret_val):
             # the call to the 3rd party device or service failed, action result should contain all the error details
             # for now the return is commented out, but after implementation, return from here
-            # return action_result.get_status()
-            pass
+            return action_result.get_status()
+            # pass
 
         # Now post process the data,  uncomment code as you deem fit
 
@@ -222,10 +222,10 @@ class ChucknorrisConnector(BaseConnector):
 
         # Return success, no need to set the message, only the status
         # BaseConnector will create a textual message based off of the summary dictionary
-        # return action_result.set_status(phantom.APP_SUCCESS)
+        return action_result.set_status(phantom.APP_SUCCESS)
 
         # For now return Error with a message, in case of success we don't set the message, but use the summary
-        return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
 
     def _handle_get_category(self, param):
         # Implement the handler here
@@ -241,7 +241,7 @@ class ChucknorrisConnector(BaseConnector):
         # required_parameter = param['required_parameter']
 
         # Optional values should use the .get() function
-        limit = param.get('limit', '')
+        limit = param.get('limit', 50)
 
         # make rest call
         ret_val, response = self._make_rest_call(
@@ -251,13 +251,15 @@ class ChucknorrisConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             # the call to the 3rd party device or service failed, action result should contain all the error details
             # for now the return is commented out, but after implementation, return from here
-            # return action_result.get_status()
-            pass
+            return action_result.get_status()
+            #pass
 
         # Now post process the data,  uncomment code as you deem fit
 
+        # Limit the number of results to the first 'n' values returned
+        limited_response = response[:limit]
         # Add the response into the data section
-        action_result.add_data(response)
+        action_result.add_data(limited_response)
 
         # Add a dictionary that is made up of the most important values from data into the summary
         # summary = action_result.update_summary({})
@@ -265,10 +267,10 @@ class ChucknorrisConnector(BaseConnector):
 
         # Return success, no need to set the message, only the status
         # BaseConnector will create a textual message based off of the summary dictionary
-        # return action_result.set_status(phantom.APP_SUCCESS)
+        return action_result.set_status(phantom.APP_SUCCESS)
 
         # For now return Error with a message, in case of success we don't set the message, but use the summary
-        return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+        #return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
 
     def handle_action(self, param):
         ret_val = phantom.APP_SUCCESS
@@ -292,6 +294,7 @@ class ChucknorrisConnector(BaseConnector):
     def initialize(self):
         # Load the state in initialize, use it to store data
         # that needs to be accessed across actions
+        self.debug_print('entering initialize')
         self._state = self.load_state()
 
         # get the asset config
@@ -306,12 +309,13 @@ class ChucknorrisConnector(BaseConnector):
         optional_config_name = config.get('optional_config_name')
         """
 
-        self._base_url = config.get('base_url')
-
+        self._base_url = 'http://' + config.get('hostname')
+        
         return phantom.APP_SUCCESS
 
     def finalize(self):
         # Save the state, this data is saved across actions and app upgrades
+        self.debug_print('entering finalize')
         self.save_state(self._state)
         return phantom.APP_SUCCESS
 

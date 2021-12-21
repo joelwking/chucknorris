@@ -23,7 +23,7 @@
             "data_type": "string",
             "required": true,
             "value_list": [],
-            "default": "",
+            "default": "api.chucknorris.io",
             "order": 0,
             "name": "hostname",
             "id": 0
@@ -34,7 +34,7 @@
             "required": false,
             "default": false,
             "order": 1,
-            "name": "verify",
+            "name": "verify_server_cert",
             "id": 1
         }
     },
@@ -51,7 +51,7 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "get_random",
+            "action": "get random",
             "identifier": "get_random",
             "description": "Retrieve a random joke",
             "verbose": "Retrieve a random chuck joke in JSON format.",
@@ -84,7 +84,7 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "get_category",
+            "action": "get category",
             "identifier": "get_category",
             "description": "Get available categories",
             "verbose": "Retrieve a list of available categories.",
@@ -92,13 +92,13 @@
             "read_only": false,
             "parameters": {
                 "limit": {
-                    "description": "max limit to return",
+                    "description": "maximum limit of categories to return",
                     "data_type": "numeric",
                     "required": false,
                     "primary": false,
                     "contains": [],
                     "value_list": [],
-                    "default": "10",
+                    "default": 5,
                     "order": 0,
                     "name": "limit"
                 }

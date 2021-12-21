@@ -6,7 +6,8 @@
                "verify_server_cert": false
     },
     "debug_level": 3,
-    "identifier": "test_connectivity",
+    "identifier": "get_category",
     "parameters": [
+        {"limit": 4 }
     ]
 }

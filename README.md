@@ -1,6 +1,16 @@
 # chucknorris
 Sample Splunk SOAR (formerly Phantom) app for the Chuck Norris API
 
+Command format for creating the TAR file
+----------------------------------------
+
+Modify the exclude file and add any files or directories you don't want in the TAR file
+
+```shell
+cd /home/phantom/app/chucknorris
+tar --exclude-from phchucknorris/exclude_files.txt -zcvf chucknorris.tgz phchucknorris
+```
+
 
 Instructions for creating a container and artifact
 --------------------------------------------------

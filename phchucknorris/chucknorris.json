@@ -128,10 +128,19 @@
                 {
                     "data_path": "summary.total_objects_successful",
                     "data_type": "numeric"
-                }
+                },
+                {
+                    "data_path": "action_result.data.*.categories.*",
+                    "data_type": "string",
+                    "column_name": "Categories",
+                    "column_order": 0
+                  }
             ],
             "render": {
-                "type": "table"
+                "type": "table",
+                "width": 1,
+                "title": "Chuck Norris API Categories",
+                "height": 8
             },
             "versions": "EQ(*)"
         }

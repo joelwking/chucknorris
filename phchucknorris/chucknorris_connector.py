@@ -259,7 +259,7 @@ class ChucknorrisConnector(BaseConnector):
         # Limit the number of results to the first 'n' values returned
         limited_response = response[:limit]
         # Add the response into the data section
-        action_result.add_data(limited_response)
+        action_result.add_data(dict(categories=limited_response))
 
         # Add a dictionary that is made up of the most important values from data into the summary
         # summary = action_result.update_summary({})

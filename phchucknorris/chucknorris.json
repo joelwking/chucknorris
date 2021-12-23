@@ -60,10 +60,14 @@
             "parameters": {},
             "output": [
                 {
-                    "data_path": "action_result.status",
+                    "data_path": "action_result.data.*.value",
                     "data_type": "string",
-                    "column_name": "status",
+                    "column_name": "Quote",
                     "column_order": 0
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -130,15 +134,15 @@
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.categories.*",
+                    "data_path": "action_result.data.*.categories",
                     "data_type": "string",
                     "column_name": "Categories",
-                    "column_order": 0
+                    "column_order": 2
                   }
             ],
             "render": {
                 "type": "table",
-                "width": 1,
+                "width": 3,
                 "title": "Chuck Norris API Categories",
                 "height": 8
             },

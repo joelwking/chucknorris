@@ -252,7 +252,7 @@ class ChucknorrisConnector(BaseConnector):
             # the call to the 3rd party device or service failed, action result should contain all the error details
             # for now the return is commented out, but after implementation, return from here
             return action_result.get_status()
-            #pass
+            # pass
 
         # Now post process the data,  uncomment code as you deem fit
 
@@ -270,7 +270,7 @@ class ChucknorrisConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS)
 
         # For now return Error with a message, in case of success we don't set the message, but use the summary
-        #return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
 
     def handle_action(self, param):
         ret_val = phantom.APP_SUCCESS
@@ -310,7 +310,7 @@ class ChucknorrisConnector(BaseConnector):
         """
 
         self._base_url = 'http://' + config.get('hostname')
-        
+
         return phantom.APP_SUCCESS
 
     def finalize(self):

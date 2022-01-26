@@ -1,9 +1,47 @@
 # chucknorris
-Sample Splunk SOAR (formerly Phantom) app for the Chuck Norris API
+Sample Splunk> SOAR (formerly Phantom) app for the Chuck Norris API
+
+This app enables process and documentation validation for creating an app on Splunk> SOAR.
+
+Update date and version
+-----------------------
+Update the JSON file, verify the version and update time are correct.
+
+```json
+    "app_version": "1.0.0",
+    "utctime_updated": "2022-01-26T20:15:03.075859Z",
+```
+
+Compile the app
+---------------
+Compile the Chuck Norris app, and install it.
+
+```
+[phantom@appdev phchucknorris]$ phenv python /opt/phantom/bin/compile_app.pyc -i
+cd'ing into ./
+Validating App Json
+    App json found at ./chucknorris.json
+  Validating App Json
+  Validating actions
+    test connectivity
+      No further validation coded for "test connectivity" action
+    get random
+      Done
+    get category
+      Done
+Compiling: ./__init__.py
+Compiling: ./chucknorris_connector.py
+Compiling: ./chucknorris_consts.py
+Installing app...
+  Creating tarball...
+  ..//home/phantom/app/chucknorris/phchucknorris.tgz
+  Calling installer...
+  Success
+Done
+```
 
 Command format for creating the TAR file
 ----------------------------------------
-
 Modify the exclude file and add any files or directories you don't want in the TAR file
 
 ```shell
@@ -11,69 +49,33 @@ cd /home/phantom/app/chucknorris
 tar --exclude-from phchucknorris/exclude_files.txt -zcvf chucknorris.tgz phchucknorris
 ```
 
+The output is as follows:
 
-Instructions for creating a container and artifact
---------------------------------------------------
-
-From the Splunk SOAR user interface (UI) naviate to Administration -> User Management -> Users and edit the user `automation`.  You need to show the token or set a new token.
-
-```json
-{
-  "ph-auth-token": "*********",
-
-  "server": "https://54.237.22.123"
-}
+```
+[phantom@appdev chucknorris]$ tar --exclude-from phchucknorris/exclude_files.txt -zcvf phchucknorris.tgz phchucknorris
+phchucknorris/
+phchucknorris/__init__.py
+phchucknorris/chucknorris.png
+phchucknorris/chucknorris_connector.py
+phchucknorris/chucknorris_consts.py
+phchucknorris/chucknorris_dark.png
+phchucknorris/exclude_files.txt
+phchucknorris/readme.html
+phchucknorris/test_jsons/
+phchucknorris/test_jsons/category.json
+phchucknorris/test_jsons/random.json
+phchucknorris/test_jsons/test.json
+phchucknorris/chucknorris.json
 ```
 
-Change the `Allowed IPs` to ***any*** or the IP address from where you are initiating the program.
+>Note: verify the excluded files were actually excluded.
 
-From the Phantom CLI, create two environment variables.
-
-```shell
-export PH_AUTH_TOKEN=2adnymvMJMredactedHOM+xBGUNs1wEk=
-export PH_SERVER=54.237.22.123
 ```
-
-Download the code
------------------
-
-```shell
-mkdir artifact
-cd artifact
-curl https://raw.githubusercontent.com/joelwking/Phantom-Cyber/master/REST_ingest/PhantomIngest.py -o PhantomIngest.py
+[phantom@appdev chucknorris]$ more phchucknorris/exclude_files.txt 
+.git*
+.vscode*
+phchucknorris/__pycache__
 ```
-
-Run the Python program
-----------------------
-
-Download and run this program to create events in Splunk SOAR so the app can be run against an artifact.
-
-```shell
-phenv python
-```
-Modify, and cut-n-paste the following into your Python interpreter.
-
-```python
-import PhantomIngest as ingest
-import os
-p = ingest.PhantomIngest(os.getenv('PH_SERVER'), os.getenv('PH_AUTH_TOKEN'))
-kontainer = {'name': 'Voltaire', 'description': 'French Enlightenment writer, historian, and philosopher.', 'label': 'events'}
-container_id = p.add_container(**kontainer)
-art_i_fact = {"name": "François-Marie Arouet", "source_data_identifier": "IR_3458575"}
-cef = {'sourceAddress': '192.0.2.1', 'sourcePort': '6553', 'sourceUserId': 'voltaire@example.net'}
-meta_data = {}
-artifact_id = p.add_artifact(container_id, cef, meta_data, **art_i_fact)
-print(p.status_code, container_id, artifact_id)
-```
-
-Provided you have a status code of `200`, navigate to the Splunk SOAR UI and a new event should appear.
-
-Test the app
-------------
-
-Select the Event and Artifact, and `Run Action`. Select `By App`, select the ***chucknorris*** app. Then select the **action** of `get_category` or `get_random`.
-
-If the app run is successful, you can ***Download the JSON*** or ***Open in new window***.
 
 Author
 ------
